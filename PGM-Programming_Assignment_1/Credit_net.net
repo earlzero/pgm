@@ -153,13 +153,13 @@ potential ( Reliability | Age PaymentHistory )
 potential ( CreditWorthiness | Reliability FutureIncome DebtIncomeRatio )
 {
 	data = ((((	0.8	0.2	)
-		(	0.6	0.4	))
+		(	0.7	0.3	))
 		((	0.6	0.4	)
 		(	0.5	0.5	)))
 		(((	0.4	0.6	)
 		(	0.3	0.7	))
-		((	0.1	0.9	)
-		(	0.2	0.8	))));
+		((	0.2	0.8	)
+		(	0.1	0.9	))));
 }
 potential ( Income | )
 {
@@ -185,7 +185,7 @@ potential ( Assets | Income )
 {
 	data = ((	0.5	0.4	0.1	)
 		(	0.3	0.5	0.2	)
-		(	0.2	0.4	0.4	));
+		(	0.2	0.3	0.5	));
 }
 potential ( PaymentHistory | Age DebtIncomeRatio )
 {
