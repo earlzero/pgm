@@ -1,0 +1,86 @@
+   1   1   1:1
+   2   1   1:0
+   3   1   1:0
+   1   2   1:0.50000
+   2   2   1:0.50000
+   3   2   1:0
+   1   3   1:0
+   2   3   1:1
+   3   3   1:0
+   1   1   2:0.50000
+   2   1   2:0.50000
+   3   1   2:0
+   1   2   2:0.25000
+   2   2   2:0.50000
+   3   2   2:0.25000
+   1   3   2:0
+   2   3   2:0.50000
+   3   3   2:0.50000
+   1   1   3:0
+   2   1   3:1
+   3   1   3:0
+   1   2   3:0
+   2   2   3:0.50000
+   3   2   3:0.50000
+   1   3   3:0
+   2   3   3:0
+   3   3   3:1
+
+allelesToGenotypes =
+
+   1   2   3
+   2   4   5
+   3   5   6
+
+genotypesToAlleles =
+
+   1   1
+   1   2
+   1   3
+   2   2
+   2   3
+   3   3
+
+use genotypesToAlleles array to build normal juxtaposition
+counts5 = arrayfun( @(x)sum(M==x), unique(M) );
+
+
+Please make sure you have read the pdf document before reading this and also make sure you read comments in the .m files.
+
+1. Unless you know lot of Biology or Genetics please watch this video first. 
+http://www.khanacademy.org/science/biology/heredity-and-genetics/v/introduction-to-heredity?playlist=Biology
+
+2. phenotypeGivenGenotypeMendelianFactor:
+
+I tried to explain this using a short video tutorial at http://www.youtube.com/watch?v=IVXHXdr2J1c&feature=plcp
+
+3. phenotypeGivenGenotypeFactor:
+
+The only thing you need to keep in mind is P(Not A)=1-P(A) . I also came across this cool Octave feature which is for example to select or set odd columns for all rows you could use something like (:,1:2:end). I don’t think you need this as you can just use for loops and in fact I just used for loops when doing phenotypeGivenCopiesFactor.
+
+4. genotypeGivenAlleleFreqsFactor:
+
+There is a function called nchoosek in case you are new to octave or matlab.
+
+Andrew Clegg from the first online PGM  class posted following Url  which was helpful in solving this exercise. Just look at Table 1: Punnett square for Hardy–Weinberg equilibrium at following Url 
+http://en.wikipedia.org/wiki/Hardy-Weinberg_law#Derivation
+
+Make sure you understand allelesToGenotypes that is already supplied to you (It is very well explained in the comments)
+
+5. genotypeGivenParentsGenotypesFactor:
+
+Make sure you understand genotypesToAlleles
+
+Possible Child outcomes with alleles 1,2 and 2,1 map to same genotype! Initially I did not take this into account and hence had a bug. Also fliplr function came handy in my implementation. If you find yourself trying to vectorize and spending a lot of time vectorizing may be you may want to consider using for loops.
+
+6.constructGeneticNetwork:
+
+Please make sure you read PDF document. This may initially feel like it is hard but once you complete above functions you basically use those here. Pay Attention to how Variables should be numbered. Clearly explained in comments in the code
+
+7.phenotypeGivenCopiesFactor:
+
+Just Used for loops to solve this exercise.
+
+
+8. constructDecoupledGeneticNetwork:
+you have to use functions they already written for us childCopyGivenParentalsFactor,childCopyGivenFreqsFactor and the one you completed (phenotypeGivenCopiesFactor). Pay attention to pedigree.parents indices especially for childCopyGivenParentalsFactor. Read comments about how variables should be numbered
