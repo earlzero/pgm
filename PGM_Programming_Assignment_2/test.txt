@@ -26,6 +26,13 @@
    2   3   3:0
    3   3   3:1
 
+1 2
+2 3
+
+1 1
+1 2
+2 2
+
 allelesToGenotypes =
 
    1   2   3
@@ -41,8 +48,64 @@ genotypesToAlleles =
    2   3
    3   3
 
+
 use genotypesToAlleles array to build normal juxtaposition
 counts5 = arrayfun( @(x)sum(M==x), unique(M) );
+
+genotypesToAlleles =
+
+   1   1
+   1   2
+   2   2
+
+genotypeFactorPar =
+
+  scalar structure containing the fields:
+
+    var =
+
+       3   1   2
+
+    card = [](0x0)
+    val = [](0x0)
+
+octave:6> a = [1 2 3]
+a =
+
+   1   2   3
+
+octave:7> a(1)=[]
+a =
+
+   2   3
+
+octave:8> a = [1 2 3]
+a =
+
+   1   2   3
+
+octave:9> a = [1 2 3]
+a =
+
+   1   2   3
+
+octave:10> a(2)=[]
+a =
+
+   1   3
+
+octave:11> [ix, iy] = find(a==2)
+ix = [](1x0)
+iy = [](1x0)
+octave:12> a = [1 2 3]
+a =
+
+   1   2   3
+
+octave:13> [ix, iy] = find(a==2)
+ix =  1
+iy =  2
+octave:14> 
 
 
 Please make sure you have read the pdf document before reading this and also make sure you read comments in the .m files.

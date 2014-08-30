@@ -32,10 +32,6 @@ genotypeVarChild = 3;
 genotypeVarParentOne = 1;
 genotypeVarParentTwo = 2;
 genotypeFactorPar = struct('var', [3,1,2], 'card', [3,3,3], 'val', [1,0,0, 0.5,0.5,0, 0,1,0 ,0.5,0.5,0, 0.25,0.5,0.25 ,0,0.5, 0.5,0, 1,0,0, 0.5,0.5, 0,0,1]); % Comment out this line for testing
-for i = 1:length(genotypeFactorPar.val)
-	disp(IndexToAssignment(i, genotypeFactorPar.card))
-	disp(genotypeFactorPar.val(i))
-end
 genotypeFactorPar = genotypeGivenParentsGenotypesFactor(numAlleles, genotypeVarChild, genotypeVarParentOne, genotypeVarParentTwo)
 
 % Testing constructGeneticNetwork:

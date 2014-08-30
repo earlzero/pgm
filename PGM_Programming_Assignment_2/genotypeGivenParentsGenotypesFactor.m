@@ -59,22 +59,62 @@ c = nchoosek(numAlleles, 2) + numAlleles;
 % Fill in genotypeFactor.var.  This should be a 1-D row vector.
 % Fill in genotypeFactor.card.  This should be a 1-D row vector.
 genotypeFactor.var = [genotypeVarChild, genotypeVarParentOne, genotypeVarParentTwo];
+allelesToGenotypes;
+genotypesToAlleles;
 genotypeFactor.card = [c c c];
 genotypeFactor.val = zeros(1, prod(genotypeFactor.card));
 % Replace the zeros in genotypeFactor.val with the correct values.
-for i = 1:length(genotypeFactor.val)
+	%for i = 1:length(genotypeFactor.val)
+	%	ass = IndexToAssignment(i, genotypeFactor.card);
+	%	child = ass(1);
+	%	left = min(ass(2:3));
+	%	right = max(ass(2:3));
+	%	a = genotypesToAlleles(child,:);
+	%	b = genotypesToAlleles(left,:);
+	%	c = genotypesToAlleles(right,:);
+	%	a
+	%	b
+	%	c
+	%	arrayfun( @(x)sum([b c]==x), unique(a))
+	%	pause()
+	%end
+function result = count(target, left, right) 
+	result = 0;
+	if(sum(left==target(1)) > 0 && sum(right==target(2)) > 0)
+		result = result + 1
+		[ix, iy] = find(left==target(1));
+		left(iy)=[];
+		[ix, iy] = find(right==target(2));
+		right(iy)=[];
+	elseif(sum(left==target(2)) > 0 && sum(right==target(1)) > 0)
+		result = result + 1
+		[ix, iy] = find(left==target(2));
+		left(iy)=[];
+		[ix, iy] = find(right==target(1));
+		right(iy)=[];
+	end
+	if(result > 0)
+		result = result + count(target, left, right);
+	end
+endfunction
+len = prod(genotypeFactor.card);
+for i = 1:len
+	counter = 0;
 	ass = IndexToAssignment(i, genotypeFactor.card);
-	child = ass(1);
-	left = min(ass(2:3));
-	right = max(ass(2:3));
-	a = genotypesToAlleles(child,:);
-	b = genotypesToAlleles(left,:);
-	c = genotypesToAlleles(right,:);
-	a
-	b
-	c
-	arrayfun( @(x)sum([b c]==x), unique(a))
-	pause()
+	target = genotypesToAlleles(ass(1),:);
+	left = genotypesToAlleles(ass(2),:);
+	right = genotypesToAlleles(ass(3),:);
+	p = count(target, left, right);
+	genotypeFactor.val(i)=p;
+end
+for i = 0:(c*c - 1)
+	total = 0;
+	for j = 0:(c-1)
+		total = total + genotypeFactor.val(i*c + j + 1);
+	end
+	for j = 0:(c-1)
+		genotypeFactor.val(i*c + j + 1) = genotypeFactor.val(i*c + j + 1) / total;
+	end
 end
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
