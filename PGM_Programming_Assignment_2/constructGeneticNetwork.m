@@ -72,7 +72,9 @@ for i = 1:numPeople
 		factorList(i).var = [i pedigree.parents(i,:)];
 	end
 	factorList(numPeople + i).var = [(i + numPeople) i];
+
+	factorList(i).card = ones(size(factorList(i).var)) * 3;
+	factorList(numPeople + i).card = [2 3];
 end
-factorList.var
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
