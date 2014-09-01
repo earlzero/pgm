@@ -81,13 +81,13 @@ genotypeFactor.val = zeros(1, prod(genotypeFactor.card));
 function result = count(target, left, right) 
 	result = 0;
 	if(sum(left==target(1)) > 0 && sum(right==target(2)) > 0)
-		result = result + 1
+		result = result + 1;
 		[ix, iy] = find(left==target(1));
 		left(iy)=[];
 		[ix, iy] = find(right==target(2));
 		right(iy)=[];
 	elseif(sum(left==target(2)) > 0 && sum(right==target(1)) > 0)
-		result = result + 1
+		result = result + 1;
 		[ix, iy] = find(left==target(2));
 		left(iy)=[];
 		[ix, iy] = find(right==target(1));

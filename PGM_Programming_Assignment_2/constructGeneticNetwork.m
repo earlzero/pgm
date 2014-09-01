@@ -47,6 +47,30 @@ function factorList = constructGeneticNetwork(pedigree, alleleFreqs, alphaList)
 % Output:
 %   factorList: Struct array of factors for the genetic network (In each
 %   factor, .var, .card, and .val are all row 1-D vectors.)
+function val = prepareVals(input, numPeople)
+	for i = 1:numPeople
+		if(length(input(i).val) == 0)
+			own = input(i).var(1);
+			left = input(i).var(2);
+			right = input(i).var(3);
+			if(length(input(left).val) != 0 && length(input(right).val) != 0) 
+				input(i).val = genotypeGivenParentsGenotypesFactor(numAlleles, own, left, right).val
+			end
+		end
+	end
+	ready = false;
+	for i = 1:numPeople
+		if(length(input(i).val) == 0)
+			ready = true;
+		end
+	end
+	if ready
+		val = prepareVals(input, numPeople);
+	else
+		val = input;
+	end
+endfunction
+
 
 numPeople = length(pedigree.names);
 
@@ -75,6 +99,12 @@ for i = 1:numPeople
 
 	factorList(i).card = ones(size(factorList(i).var)) * 3;
 	factorList(numPeople + i).card = [2 3];
+	var = factorList(numPeople + i).var;
+	factorList(numPeople + i).val = phenotypeGivenGenotypeFactor(alphaList, var(2), var(1)).val;
+	if prod(pedigree.parents(i)==[0 0])
+		factorList(i).val=genotypeGivenAlleleFreqsFactor(alleleFreqs, i).val;
+	end
 end
+	factorList = prepareVals(factorList, numPeople);
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
