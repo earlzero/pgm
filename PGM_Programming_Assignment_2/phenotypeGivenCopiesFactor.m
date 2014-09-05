@@ -40,7 +40,6 @@ phenotypeFactor = struct('var', [], 'card', [], 'val', []);
 % alleles.)
 
 [allelesToGenotypes, genotypesToAlleles] = generateAlleleGenotypeMappers(numAlleles);
-
 % One or both of these matrices might be useful.
 %
 %   1.  allelesToGenotypes: n x n matrix that maps pairs of allele IDs to 
@@ -60,8 +59,19 @@ phenotypeFactor = struct('var', [], 'card', [], 'val', []);
 
 % Fill in phenotypeFactor.var.  This should be a 1-D row vector.
 % Fill in phenotypeFactor.card.  This should be a 1-D row vector.
-
+phenotypeFactor.var = [phenotypeVar geneCopyVarOne geneCopyVarTwo];
+phenotypeFactor.card = [2 numAlleles numAlleles];
 phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
 % Replace the zeros in phentoypeFactor.val with the correct values.
-
+for i = 1:prod(phenotypeFactor.card)
+	assignment = IndexToAssignment(i, phenotypeFactor.card);
+	l = assignment(2);
+	r = assignment(3);
+	index = allelesToGenotypes(l, r);
+	if(assignment(1) == 1)
+		phenotypeFactor.val(i) = alphaList(index);
+	else
+		phenotypeFactor.val(i) = 1 - alphaList(index);
+	end
+end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
