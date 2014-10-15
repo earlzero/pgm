@@ -28,5 +28,18 @@ end
 factors = repmat(struct('var', [], 'card', [], 'val', []), n - 2, 1);
 
 % Your code here:
-
+%find(arrayfun(@(x)all(x.chars==[10 18 4]),tripletList) )
+table = ones(K*K*K, 1);
+for i = 1:length(tripletList)
+	chars = tripletList(i).chars;
+	a = chars(3);
+	b = chars(2);
+	c = chars(1);
+	table((a-1)*K*K+(b - 1) * K + c) = tripletList(i).factorVal;
+endfor
+for i = 1:n-2
+	factors(i).var = [i i+1 i+2];
+	factors(i).card = [K K K];
+	factors(i).val = table;
+endfor
 end
