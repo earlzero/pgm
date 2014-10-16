@@ -21,9 +21,19 @@ if (length(allFactors) <= F)
     factors = allFactors;
     return;
 end
-
+factors = repmat(struct('var', [], 'card', [], 'val', []), F, 1);
 % Your code here:
-factors = allFactors; %%% REMOVE THIS LINE
-
+n = length(allFactors);
+values = zeros(n, 1);
+for i = 1:n
+	[B, indx] = sort(allFactors(i).val,'descend');
+	values(i) = B(1);
+endfor
+sorted = sort(values, 'descend')(1:F);
+factors
+for i = 1:length(sorted)
+	ind = find(sorted(i) == values);
+	factors(i) = allFactors(ind);	
+endfor
 end
 
